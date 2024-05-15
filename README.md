@@ -33,7 +33,7 @@ II. Các bước thực hiện
 
 III. Các Công Nghệ Sử Dụng
 
-- Backend: FastAPI, Node-RED, api.aspx
+- Backend: FastAPI, Node-RED, asp.net
 
 - Database: MSSQL
 
