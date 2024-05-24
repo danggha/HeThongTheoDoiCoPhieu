@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Bar Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="stockPriceChart" width="800" height="400"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('stockPriceChart').getContext('2d');
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    var labels = data.map(row => row.timestamp); // Sử dụng thuộc tính timestamp từ dữ liệu
+                    var prices = data.map(row => row.price); // Sử dụng thuộc tính price từ dữ liệu
+
+                    var stockPriceChart = new Chart(ctx, {
+                        type: 'bar', // Thay đổi loại biểu đồ thành 'bar'
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Stock Price',
+                                backgroundColor: 'rgba(54, 162, 235, 0.5)', // Màu của các cột
+                                borderColor: 'rgba(54, 162, 235, 1)', // Đường viền của các cột
+                                borderWidth: 1,
+                                data: prices
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Time'
+                                    }
+                                }],
+                                yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Price'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                enabled: true
+                            },
+                            animation: {
+                                duration: 1000
+                            }
+                        }
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
