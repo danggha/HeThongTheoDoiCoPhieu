@@ -1,0 +1,232 @@
+[
+    {
+        "id": "37810a5dbc35e96c",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "64fdfdcbaf028c86",
+        "type": "inject",
+        "z": "37810a5dbc35e96c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 260,
+        "y": 180,
+        "wires": [
+            [
+                "c0656744d54d1dd7"
+            ]
+        ]
+    },
+    {
+        "id": "7b9dcba2c6033ef8",
+        "type": "debug",
+        "z": "37810a5dbc35e96c",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c0656744d54d1dd7",
+        "type": "http request",
+        "z": "37810a5dbc35e96c",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:8001/stock/ACB",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 510,
+        "y": 180,
+        "wires": [
+            [
+                "7b9dcba2c6033ef8",
+                "74af980c6ba8f51d"
+            ]
+        ]
+    },
+    {
+        "id": "74af980c6ba8f51d",
+        "type": "MSSQL",
+        "z": "37810a5dbc35e96c",
+        "mssqlCN": "4b27d799493ce389",
+        "name": "",
+        "outField": "payload",
+        "returnType": 0,
+        "throwErrors": 1,
+        "query": "InsertStockInfo",
+        "modeOpt": "",
+        "modeOptType": "execute",
+        "queryOpt": "payload",
+        "queryOptType": "editor",
+        "paramsOpt": "",
+        "paramsOptType": "editor",
+        "rows": "rows",
+        "rowsType": "msg",
+        "parseMustache": true,
+        "params": [
+            {
+                "output": false,
+                "name": "symbol",
+                "type": "VarChar",
+                "valueType": "msg",
+                "value": "payload.symbol",
+                "options": {
+                    "nullable": true,
+                    "primary": false,
+                    "identity": false,
+                    "readOnly": false
+                }
+            },
+            {
+                "output": false,
+                "name": "price",
+                "type": "Decimal(10,3)",
+                "valueType": "msg",
+                "value": "payload.price",
+                "options": {
+                    "nullable": true,
+                    "primary": false,
+                    "identity": false,
+                    "readOnly": false
+                }
+            },
+            {
+                "output": false,
+                "name": "change",
+                "type": "Decimal(10,3)",
+                "valueType": "msg",
+                "value": "payload.change",
+                "options": {
+                    "nullable": true,
+                    "primary": false,
+                    "identity": false,
+                    "readOnly": false
+                }
+            },
+            {
+                "output": false,
+                "name": "last_refreshed",
+                "type": "DateTime",
+                "valueType": "msg",
+                "value": "payload.last_refreshed",
+                "options": {
+                    "nullable": true,
+                    "primary": false,
+                    "identity": false,
+                    "readOnly": false
+                }
+            }
+        ],
+        "x": 920,
+        "y": 460,
+        "wires": [
+            [
+                "95c6cc830a90590a"
+            ]
+        ]
+    },
+    {
+        "id": "95c6cc830a90590a",
+        "type": "debug",
+        "z": "37810a5dbc35e96c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "dca16ea8aa2ee668",
+        "type": "function",
+        "z": "37810a5dbc35e96c",
+        "name": "function 1",
+        "func": "\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 460,
+        "wires": [
+            [
+                "b41993cadd82f80f"
+            ]
+        ]
+    },
+    {
+        "id": "b41993cadd82f80f",
+        "type": "debug",
+        "z": "37810a5dbc35e96c",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "4b27d799493ce389",
+        "type": "MSSQL-CN",
+        "tdsVersion": "7_4",
+        "name": "dangha",
+        "server": "DESKTOP-T80TUOI",
+        "port": "1433",
+        "encyption": true,
+        "trustServerCertificate": true,
+        "database": "CoPhieu",
+        "useUTC": false,
+        "connectTimeout": "",
+        "requestTimeout": "",
+        "cancelTimeout": "",
+        "pool": "",
+        "parseJSON": false,
+        "enableArithAbort": true,
+        "readOnlyIntent": false
+    }
+]
